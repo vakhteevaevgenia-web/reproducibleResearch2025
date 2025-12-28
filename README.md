@@ -75,7 +75,7 @@ fasterq-dump --threads 2 -A --progress SRR8205844 ; fasterq-dump --threads 2 -A 
 
 Скачивание референса
 
-wget https://ftp.ncbi.nlm.nih.gov/geo/series/GSE129nnn/GSE129069/suppl/GSE129069%5FEveBCdTP1%5Fani%2Efasta%2Egz
+wgethttps://ftp.ncbi.nlm.nih.gov/geo/series/GSE129nnn/GSE129069/suppl/GSE129069%5FEveBCdTP1%5Fani%2Efasta%2Egz
 
 Распаковка ахрива
 
@@ -91,7 +91,7 @@ lign_and_estimate_abundance.pl --transcripts GSE129069_EveBCdTP1_ani.fasta --est
 
 Скачивание таблицы образцов
 
-wget https://raw.githubusercontent.com/drozdovapb/Reproducible_research/refs/heads/main/Data/Eve_samples.txt
+wgethttps://raw.githubusercontent.com/drozdovapb/Reproducible_research/refs/heads/main/Data/Eve_samples.txt
 
 Выравнивание с помощью Salmon
 
