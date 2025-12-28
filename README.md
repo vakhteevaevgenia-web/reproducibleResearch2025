@@ -333,6 +333,15 @@ plot_1 <- ggplot(Jakob_long,
   
 plot_1
 
-## КАРТИНКА
+![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/Act.ferm.png)
 
+## Анализ дифференциальной экспрессии генов
+
+### Скачивание данных с удалённого сервера
+
+export PATH=$PATH:/media/secondary/apps/trinityrnaseq-v2.14.0/util
+
+abundance_estimates_to_matrix.pl --est_method salmon --gene_trans_map none \--name_sample_by_basedir --out_prefix Eve --cross_sample_norm none \Eve*/quant.sf
+
+### Анализ в R studio
 
