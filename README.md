@@ -101,3 +101,33 @@ align_and_estimate_abundance.pl --transcripts GSE129069_EveBCdTP1_ani.fasta --se
 
 ## Построение графиков в R studio
 
+#Прописываем путь к рабочей директории
+setwd("C:\\Users\\vakht\\OneDrive\\Desktop\\Учёба\\Воспроизводимые\\1211")
+
+#Подключаем необходимые пакеты
+library(ggplot2)
+library(ggpubr)
+library(openxlsx)
+
+#Загружаем таблицу
+tbl <- read.xlsx("Jakob-etal_2021.xlsx", sheet = 4) 
+
+#Проверка данных
+str(tbl)
+hist(tbl$CS.activity)
+hist(tbl$LDH.activity)
+
+#Построение графиков
+my_graph <- ggplot(data=tbl, aes(x=Species, y=CS.activity)) +
+  expand_limits(y=0) + #y=0 включаем
+  geom_boxplot(show.legend = FALSE) + #боксплоты (без легенды)
+  ylab("CS activity, a.u.") + xlab("") + #название оси Y
+  theme_bw(base_size = 16) + #увеличим размер шрифта + белый фон
+  theme(strip.text = element_text(face="italic")) #курсив
+
+my_graph #вывод графика
+
+ggsave("CS_with_stats.png", device=png, width=20, height=12, units="cm") #сохранение в файл
+
+#ФОТО
+
