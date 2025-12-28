@@ -197,9 +197,10 @@ ggplot(Jakob,
   
 ggsave(filename="CS_activity.png", device=png, width=18, height=12, units="cm", dpi=300) # сохраняем полученный результат
 
-## общий график
+![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/%D0%91%D0%BE%D0%BA%D1%81%D0%BF%D0%BB%D0%BE%D1%82%D1%8B_%D0%B2%D1%81%D0%B5.png)
 
-# задаем рабочую директорию (где находятся файлы для анализа)
+# Название
+#задаем рабочую директорию (где находятся файлы для анализа)
 
 setwd("C:\\Users\\vakht\\OneDrive\\Desktop\\Учёба\\Воспроизводимые\\1211")
 
@@ -211,11 +212,11 @@ library(ggpubr)
 
 library(tidyr)
 
-# загружаем данные для анализа
+#загружаем данные для анализа
 
 Jakob <- read.xlsx("Jakob-etal_2021.xlsx", sheet = 3, startRow = 2)
 
-# Преобразуем данные из широкого формата в длинный
+#Преобразуем данные из широкого формата в длинный
 Jakob_long <- pivot_longer(
 
   Jakob,
@@ -230,7 +231,7 @@ Jakob_long <- pivot_longer(
   
 )
 
-# Переименовываем ферменты для удобства (через преобразования текста в фактор)
+#Переименовываем ферменты для удобства (через преобразования текста в фактор)
 
 Jakob_long$Enzyme <- factor(Jakob_long$Enzyme, 
 
@@ -242,7 +243,7 @@ Jakob_long$Enzyme <- factor(Jakob_long$Enzyme,
                             
 )
 
-# Создаем цветовую палитру для ферментов
+#Создаем цветовую палитру для ферментов
 
 enzyme_colors <- c(
 
@@ -256,7 +257,7 @@ enzyme_colors <- c(
   
 )
 
-# Строим график
+#Строим график
 
 plot_1 <- ggplot(Jakob_long, 
 
@@ -270,7 +271,7 @@ plot_1 <- ggplot(Jakob_long,
                      
   geom_point(alpha = 0.4, size = 1.5) + # задаем уровень прозрачности и размер точек
   
-  # Создаем линии по средним значениям
+  #Создаем линии по средним значениям
   
   stat_summary(
   
@@ -284,7 +285,7 @@ plot_1 <- ggplot(Jakob_long,
     
   ) +
   
-  # Вычисляем дов. интервалы (95)
+  #Вычисляем дов. интервалы (95)
   
   stat_summary(
   
@@ -300,12 +301,12 @@ plot_1 <- ggplot(Jakob_long,
     
   ) +
   
-  # Настройка цветов
+  #Настройка цветов
   scale_color_manual(values = enzyme_colors) + #применяем ранее созданную палитру enzyme_colors к линиям
   
   scale_fill_manual(values = enzyme_colors) + #применяем ранее созданную палитру enzyme_colors к ДИ
   
-  # Названия осей и легенды
+  #Названия осей и легенды
   
   labs(
   
@@ -344,4 +345,98 @@ export PATH=$PATH:/media/secondary/apps/trinityrnaseq-v2.14.0/util
 abundance_estimates_to_matrix.pl --est_method salmon --gene_trans_map none \--name_sample_by_basedir --out_prefix Eve --cross_sample_norm none \Eve*/quant.sf
 
 ### Анализ в R studio
+
+# Установка рабочей директории
+setwd("C:\\Users\\vakht\\OneDrive\\Desktop\\Учёба\\Воспроизводимые\\1211")
+
+install.packages("BiocManager")
+
+BiocManager::install("EnhancedVolcano")
+
+BiocManager::install("DESeq2")
+
+library(DESeq2)
+
+library(EnhancedVolcano)
+
+library(openxlsx)
+
+#загружаем данные
+
+count_table <- read.table("Gla.isoform.counts.matrix")
+
+count_table <- round(count_table)
+
+sample_table <- data.frame(conditions=c("control", "control", "control", "control",
+
+                                        "heat_shock", "heat_shock", "heat_shock"))
+                                        
+
+# Анализ ДЭ
+
+ddsFullCountTable <- DESeqDataSetFromMatrix(
+
+  countData = count_table, colData = sample_table, design = ~ conditions)
+  
+dds <- DESeq(ddsFullCountTable)
+
+res <- results(dds)
+
+top_n <- 20  # Количество генов для отображения
+
+top_genes <- rownames(res)[order(res$padj)][1:top_n] # сортировка и выбор топ-20 ДЭГ
+
+# Визуализация данных
+EnhancedVolcano(res,
+
+lab = rownames(res),
+
+x = 'log2FoldChange', #
+
+y = 'pvalue',
+
+pCutoffCol = 'padj', # скорректированное p-value
+
+FCcutoff = 1, # порог изменения экспрессии
+
+title = paste("Топ-20 ДЭГ"),
+
+subtitle = "G. lacustris: heat shock vs control",
+
+col = c("grey30", "green", "blue", "red2"),
+
+labSize = 5, # размер текста
+
+labCol = 'black', # цвет текста
+
+boxedLabels = TRUE, # рамка вокруг подписей
+
+drawConnectors = TRUE, # соед. линии
+
+widthConnectors = 0.5, # толщина линий
+
+colConnectors = 'grey50', # цвет линий
+
+max.overlaps = 100,   
+
+selectLab = top_genes, # подписывать только топ-20
+
+xlab = bquote(~Log[2]~
+" Fold Change"),# подпись оси x
+ylab = bquote(~-Log[10]~italic(p)), # подпись оси y
+
+legendPosition = 'right') # положение легенды
+
+
+# Сортировка и запись данных (xlsx)
+
+DEGs <- res[abs(res$log2FoldChange) > 2 & res$padj < 0.05 & complete.cases(res$padj), ]
+
+DEGs <- DEGs[order(DEGs$log2FoldChange), ]`
+
+DEGs$Transcript <- row.names(DEGs)
+
+write.xlsx(x = DEGs, file = "DEGs_amphipods.xlsx")
+
+### Аннотация генов
 
