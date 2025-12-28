@@ -440,3 +440,4 @@ write.xlsx(x = DEGs, file = "DEGs_amphipods.xlsx")
 
 ### Аннотация генов
 
+![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/%D0%B2%D1%83%D0%BB%D0%BA%D0%B0%D0%BD%D0%BE%D0%BF%D0%BB%D0%BE%D1%82.jpg)
