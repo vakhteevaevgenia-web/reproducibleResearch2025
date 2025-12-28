@@ -137,11 +137,13 @@ my_graph <- ggplot(data=tbl, aes(x=Species, y=CS.activity)) +
   
   theme_bw(base_size = 16) + #увеличим размер шрифта + белый фон
   
-  theme(strip.text = element_text(face="italic")) #курсив
+  theme(strip.text = element_text(face="italic")) + #курсив
+  
+geom_pwc(method = "wilcox_test", label="p.adj") #добавление статистических тестов
 
 my_graph #вывод графика
 
-ggsave("CS_with_stats.png", device=png, width=20, height=12, units="cm") #сохранение в файл
+ggsave("CS_with_stats.png", device=png, width=16, height=12, units="cm") #сохранение в файл
 
 ![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/%D0%A1%D0%BD%D0%B8%D0%BC%D0%BE%D0%BA%20%D1%8D%D0%BA%D1%80%D0%B0%D0%BD%D0%B0%202025-12-28%20211317.png)
 
