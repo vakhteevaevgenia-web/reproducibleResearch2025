@@ -338,4 +338,7 @@ write.xlsx(x = DEGs, file = "DEGs_amphipods.xlsx")
 ```
 ### Аннотация генов
 
-![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/%D0%B2%D1%83%D0%BB%D0%BA%D0%B0%D0%BD%D0%BE%D0%BF%D0%BB%D0%BE%D1%82.jpg)
+Имея таблицу с индентификаторами TRINITY, на удалёном сервере можно найти полные последовательности в fasta файле. Для этого вводится:
+`grep НОМЕР TRINITY GSE129069_GlaBCdTP1_ani.fasta -A 1`
+Для удобства аннотации создаётся отдельная таблица с номером TRINITY и последовательностями. Последовательности загружаются в BLASTn, результат записывается в таблицу. Далее в исходном файле matrix замяются названия и строится новый вулканоплот. 
+![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/Volcano_plot.png)
