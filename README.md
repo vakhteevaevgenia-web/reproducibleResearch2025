@@ -1,7 +1,7 @@
 # Температурная зависимость (Q₁₀) активности ключевых метаболических ферментов у амфиподы Gammarus lacustris.
 
 # Graphical abstract 
-
+![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/graph.abctr.png)
 
 # Резюме
 
