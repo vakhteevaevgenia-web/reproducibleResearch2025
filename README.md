@@ -1,18 +1,18 @@
-# Температурная зависимость (Q₁₀) активности ключевых метаболических ферментов у амфиподы Gammarus lacustris.
+# Температурная зависимость (Q₁₀) активности ключевых метаболических ферментов у амфиподы  Gammarus lacustris.
 
 # Graphical abstract 
 ![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/graph.abctr.png)
 
 # Резюме
 
-Gammarus lacustris - голарктическая амфипода, описанна Георгом Осианом Сарсом в 1863 году. Данному виду свойственно: широкий предел экологической толерантности, высокая фенотипическая пластичность и обширный ареал, распространяющийся в пределах Южной Европы и Центральной Азии. Повсеместное распространение включается в себя как глубокие и мелководные озёра, так и реки Голарктики, что демонстрирует значительные сезонные колебания температуры. 
+ Gammarus lacustris - голарктическая амфипода, описанна Георгом Осианом Сарсом в 1863 году. Данному виду свойственно: широкий предел экологической толерантности, высокая фенотипическая пластичность и обширный ареал, распространяющийся в пределах Южной Европы и Центральной Азии. Повсеместное распространение включается в себя как глубокие и мелководные озёра, так и реки Голарктики, что демонстрирует значительные сезонные колебания температуры. 
 
 Температура — самый распространённый абиотический фактор для животных, так как влияет на молекулярную динамику и скорость биохимических реакций.  Такой лимитирующий фактор накладывает температурные ограничения, влияющие на рутинный метаболизм и вентиляционную активность. Критическая температура, определяемая ограничениями потребления кислорода, для G. lacustris находится в диапазоне 23–25 °C. 
 
 Данное исследование направлено на изучение нормы тепловой реакции посредством анализа ключевых метаболических процессов, в том числе активность ферментов: цитратсинтаза (CS), цитохром-с-оксидаза (COX), пируваткиназа (PK), лактатдегидрогеназа (LDH), гидроксиацилдегидрогеназа (HADH) и глутаматдегидрогеназа (GDH); а также уровеня дифференциальной экспрессии генов. Условия содержания были приближены к естественным за счёт регулярной смены воды и имитации температурных изменений во время летнего потепления (температуры повышалась на 0,8 °C в день). 
 
 ![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/Airbrush-IMAGE-ENHANCER-1766905686873-1766905686873.png)
-Внешний вид объекта исследования (Gammarus lacustris). Источник фотографии:[https://www.nature.com/articles/s41598-021-89581-x]
+Внешний вид объекта исследования ( Gammarus lacustris). Источник фотографии:[https://www.nature.com/articles/s41598-021-89581-x]
 
 # Методы
 
@@ -70,7 +70,7 @@ Ctrl+A+D = выйти из процесса
 
 `export PATH=$PATH:/media/secondary/apps/sratoolkit.3.0.0-ubuntu64/bin/`
 
-Скачиваем данные (Gammarus lacustris)
+Скачиваем данные ( Gammarus lacustris)
 
 `fasterq-dump --threads 2 -A --progress SRR8205844 ; fasterq-dump --threads 2 -A --progress SRR8205843 ; fasterq-dump --threads 2 -A --progress SRR8205847 ; fasterq-dump --threads 2 -A --progress SRR8205848 ; fasterq-dump --threads 2 -A --progress SRR8206019 ; fasterq-dump --threads 2 -A --progress SRR8206020 ; fasterq-dump --threads 2 -A --progress SRR8206021`
 
@@ -78,7 +78,7 @@ Ctrl+A+D = выйти из процесса
 
 Скачивание референса
 
-`wgethttps://ftp.ncbi.nlm.nih.gov/geo/series/GSE129nnn/GSE129069/suppl/GSE129069%5FEveBCdTP1%5Fani%2Efasta%2Egz`
+`wget https://ftp.ncbi.nlm.nih.gov/geo/series/GSE129nnn/GSE129069/suppl/GSE129069%5FEveBCdTP1%5Fani%2Efasta%2Egz`
 
 Распаковка ахрива
 
@@ -90,7 +90,7 @@ Ctrl+A+D = выйти из процесса
 
 Подготавка референса Salmon
 
-`lign_and_estimate_abundance.pl --transcripts GSE129069_EveBCdTP1_ani.fasta --est_method salmon --trinity_mode --prep_reference`
+`align_and_estimate_abundance.pl --transcripts GSE129069_EveBCdTP1_ani.fasta --est_method salmon --trinity_mode --prep_reference`
 
 Скачивание таблицы образцов
 
@@ -101,6 +101,14 @@ Ctrl+A+D = выйти из процесса
 `align_and_estimate_abundance.pl --transcripts GSE129069_EveBCdTP1_ani.fasta --seqType fq --samples_file Eve_samples.txt --est_method salmon --trinity_mode --output_dir . --thread_count 2 --SS_lib_type FR`
 
 ## Построение графиков в R studio
+### Использованные пакеты и соответствующие версии
+
+```
+DESeq2 - 1.46.0
+ggplot2 - 4.0.0
+enhancedVolcano - 1.24.0
+DEGReport - 1.30.27
+```
 ```
 #Прописываем путь к рабочей директории
 setwd("C:\\Users\\vakht\\OneDrive\\Desktop\\Учёба\\Воспроизводимые\\1211")
@@ -137,7 +145,7 @@ my_graph #вывод графика
 ```
 ![Gammarus lacustris](https://github.com/vakhteevaevgenia-web/reproducibleResearch2025/blob/main/CS%20activity.png)
 
-Сравнение активности фермента цитратсинтазы (CS) между G. lacustris и E. verrucosus
+Сравнение активности фермента цитратсинтазы (CS) между  G. lacustriss и E. verrucosus
 
 ### Пример построения графика зависимости активности метаболических ферментов от различных температурных условий (на примере CS.activity.(U.mg.(FW)-1))
 
@@ -254,7 +262,7 @@ plot_1 <- ggplot(Jakob_long,
   #Названия осей и легенды
   
   labs(
-    title = "Термальные нормы реакции ключевых метаболических ферментов у E. verrucosus", # название графика
+    title = "Термальные нормы реакции ключевых метаболических ферментов у  G. lacustris", # название графика
     x = "Температура инкубации (°C)", # название оси x
     y = "Активность фермента (U·mg⁻¹ FW)", #название оси y
     color = "Фермент",
@@ -262,7 +270,7 @@ plot_1 <- ggplot(Jakob_long,
   ) +
   
   theme_minimal(base_size = 10) + # базовый размер шрифта 10
-  theme
+  theme(
     legend.position = "bottom", # положение легенды
     plot.title = element_text(face = "bold", hjust = 0.5) # жирный заголовок по центру
   )  
@@ -317,7 +325,7 @@ y = 'pvalue',
 pCutoffCol = 'padj', # скорректированное p-value
 FCcutoff = 1, # порог изменения экспрессии
 title = paste("Топ-20 ДЭГ"),
-subtitle = "G. lacustris: heat shock vs control",
+subtitle = " G. lacustris: heat shock vs control",
 col = c("grey30", "green", "blue", "red2"),
 labSize = 5, # размер текста
 labCol = 'black', # цвет текста
